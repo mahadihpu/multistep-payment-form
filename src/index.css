@@ -1,8 +1,9 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
+  font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -11,3 +12,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.MuiStepIcon-root.MuiStepIcon-active {
+  color: #ec407a !important;
+}
+.MuiStepLabel-label.MuiStepLabel-active {
+  color: #ec407a !important;
+  box-shadow: 0 -5px #ec407a !important;
+  font-size: 14px !important;
+}
+.MuiPaper-root {
+  margin-left: 20% !important ;
+  width: 30% !important;
+  margin-top: 5% !important;
+}
+
