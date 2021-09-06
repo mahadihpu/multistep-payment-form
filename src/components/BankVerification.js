@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
 
 const BankVerification = () => {
    return (
-      <div>
-         <Button>Bank Verification</Button>
-      </div>
+      <Box>
+         <Button><Typography variant="h6" fontWeight={700}>Step 4: Bank verification</Typography></Button>
+         <Typography>Get your mobile and email verified to get access to quick cash loan</Typography>
+      </Box>
    );
 };
 

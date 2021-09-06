@@ -1,0 +1,21 @@
+.sidebar .MuiStepLabel-label.MuiStepLabel-active {
+   box-shadow: -10px 0 #45af35 !important;
+   font-size: 14px !important;
+   border: 1px solid #e0e0e0 !important;
+   width: 100% !important;
+   background-color: #fff;
+ }
+ .sidebar .MuiStepLabel-label{
+   padding: 20px !important;
+   border-radius: 5px !important;
+ }
+ .sidebar .MuiPaper-root {
+   margin-top: 10% !important;
+ }
+ .sidebar .MuiStepConnector-line {
+   display: none !important;
+ }
+ .sidebar .MuiButtonBase-root{
+   margin-bottom: 10px !important;
+ }
+ 

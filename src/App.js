@@ -1,19 +1,27 @@
-import { Grid, Typography } from '@material-ui/core'
+import { createTheme, Grid, ThemeProvider, Typography } from '@material-ui/core'
 import './App.css'
-import Sidebar from './components/Sidebar'
+import VerticalStepperForm from './components/VerticalStepperForm/VerticalStepperForm';
+
+
+
+const theme = createTheme({
+  stepper: {
+    iconColor: 'green' // or logic to change color
+  },
+});
 
 
 function App() {
   return (
-    <Grid container>
-      <Grid md={1}></Grid>
-      <Grid md={10} xs={12}>
-        <Typography>Loan Application</Typography>
-        <Typography>Fill out all the information to get easy loans</Typography>
-        <Sidebar />
+    <ThemeProvider theme={theme}>
+      <Grid container>
+        <Grid md={1}></Grid>
+        <Grid md={10} xs={12}>
+          <VerticalStepperForm />
+        </Grid>
+        <Grid md={1}></Grid>
       </Grid>
-      <Grid md={1}></Grid>
-    </Grid>
+    </ThemeProvider>
   )
 }
 
