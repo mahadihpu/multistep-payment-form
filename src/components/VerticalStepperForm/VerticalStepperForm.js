@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import Typography from '@material-ui/core/Typography';
-import Step1 from '../Step1';
+import Step1 from '../Step1/Step1';
 import Step2 from '../Step2';
 import Step3 from '../Step3';
 import Step4 from '../Step4';
@@ -11,7 +11,7 @@ import MobileEmailVerification from '../MobileEmailVerification';
 import PersonalDetails from '../PersonalDetails';
 import KycDetail from '../KycDetail';
 import BankVerification from '../BankVerification';
-import { Grid, StepButton } from '@material-ui/core';
+import { Box, Button, Grid, StepButton } from '@material-ui/core';
 import './VerticalStepperFrom.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
    resetContainer: {
       padding: theme.spacing(3),
    },
+   steps: {
+      marginTop: "30%"
+   }
 }));
 
 function getSteps() {
@@ -102,34 +105,41 @@ const VerticalStepperForm = () => {
 
 
    return (
-      <div>
-         <div>
+      <Box>
+         <Box>
             <Grid container>
                <Grid xs={6} className="sidebar">
-                  <Typography variant="h5">LOAN APPLICATION</Typography>
-                  <Typography>Fill out the details to get access to quick cash loan</Typography>
-                  <Stepper orientation="vertical" nonLinear activeStep={activeStep}>
+                  <Box style={{ margin: "100px 0 0 20px", }}>
+                     <Typography variant="h3">LOAN APPLICATION</Typography>
+                     <Typography variant="h6">Fill out the details to get access to quick cash loan</Typography>
+                  </Box>
+                  <Stepper style={{ backgroundColor: '#eaeaea' }} orientation="vertical" nonLinear activeStep={activeStep}>
                      {steps.map((label, index) => (
                         <Step key={label}>
                            <StepButton
                               onClick={handleStep(index)}
                               completed={completed[index]}
                               icon=""
+                           // style={{ backgroundColor: '#eae' }}
                            >
                               {label}
                            </StepButton>
+                           {/* <Button onClick={handleStep(index)}
+                              completed={completed[index]}>
+                              {label}
+                           </Button> */}
                         </Step>
                      ))}
                   </Stepper>
                </Grid>
-               <Grid xs={6}>
-                  {getStepContent(activeStep)}
+               <Grid xs={6} className="rightContents">
+                  <Box className={classes.steps}>
+                     {getStepContent(activeStep)}
+                  </Box>
                </Grid>
             </Grid>
-            <div>
-            </div>
-         </div>
-      </div>
+         </Box>
+      </Box>
    );
 };
 

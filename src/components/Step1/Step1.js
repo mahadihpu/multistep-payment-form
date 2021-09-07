@@ -7,22 +7,31 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Grid } from '@material-ui/core';
+import { Box, Grid, TextField } from '@material-ui/core';
+import { ArrowRight } from '@material-ui/icons';
+import Phone from './InputField';
+import './style.css';
+import OtpInput from 'react-otp-input';
+import InputField from './InputField';
 
 const useStyles = makeStyles((theme) => ({
    root: {
       width: '100%',
    },
    button: {
-      marginTop: theme.spacing(1),
-      marginRight: theme.spacing(1),
+      marginTop: "9px",
+      marginLeft: "10px",
    },
    actionsContainer: {
       marginBottom: theme.spacing(2),
+      display: "flex",
    },
    resetContainer: {
       padding: theme.spacing(3),
    },
+   arrowRight: {
+      color: '#fff'
+   }
 }));
 
 function getSteps() {
@@ -32,14 +41,14 @@ function getSteps() {
 function getStepContent(step) {
    switch (step) {
       case 0:
-         return <Grid><Grid xs={8}><input type="number" /></Grid><Grid xs={4}><button>next</button></Grid></Grid>;
+         return <InputField numInputs={10} message="Enter your phone number to proceed" />;
       case 1:
-         return 'An ad group contains one or more ads which target a shared set of keywords.';
+         return <InputField numInputs={4} message="Check your phone for OTP code" />;
       case 2:
-         return `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`;
+         return <TextField
+            id="standard-basic"
+            label="Email"
+         />
       default:
          return 'Unknown step';
    }
@@ -63,25 +72,24 @@ export default function Step1() {
    };
 
    return (
-      <div className={classes.root}>
+      <Box className={classes.root}>
+         <Typography variant="h5">Step 1: Mobile and Email Verification</Typography>
          <Stepper activeStep={activeStep} orientation="vertical">
             {steps.map((label, index) => (
                <Step key={label}>
                   <StepLabel>{label}</StepLabel>
                   <StepContent>
-                     <Typography>{getStepContent(index)}</Typography>
-                     <div className={classes.actionsContainer}>
-                        <div>
-                           <Button
-                              variant="contained"
-                              color="primary"
-                              onClick={handleNext}
-                              className={classes.button}
-                           >
-                              {activeStep === steps.length - 1 ? 'Finish' : '>'}
-                           </Button>
-                        </div>
-                     </div>
+                     <Box className={classes.actionsContainer}>
+                        <Box>{getStepContent(index)}</Box>
+                        <Box><Button
+                           variant="contained"
+                           color="primary"
+                           onClick={handleNext}
+                           className={classes.button}
+                        >
+                           {activeStep === steps.length - 1 ? 'Finish' : <ArrowRight className={classes.arrowRight} />}
+                        </Button></Box>
+                     </Box>
                   </StepContent>
                </Step>
             ))}
@@ -94,6 +102,6 @@ export default function Step1() {
                </Button>
             </Paper>
          )}
-      </div>
+      </Box>
    );
 }

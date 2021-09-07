@@ -1,11 +1,12 @@
-
-import { Box, Button, Typography } from '@material-ui/core';
 import React from 'react';
+import { Box, Button, Typography } from '@material-ui/core';
+
 
 const KycDetail = () => {
    return (
-      <Box>
-         <Button><Typography variant="h6" fontWeight={700}>Step 3: KYC Verification</Typography></Button>
+      <Box textAlign="left">
+         <Typography variant="h6" style={{ fontWeight: 600 }}>Step 3: KYC Verification</Typography>
+         <br />
          <Typography>Get your mobile and email verified to get access to quick cash loan</Typography>
       </Box>
    );
