@@ -1,4 +1,5 @@
 import { createMuiTheme, Grid, ThemeProvider } from '@material-ui/core'
+import { createContext, useState } from 'react';
 import './App.css'
 import VerticalStepperForm from './components/VerticalStepperForm/VerticalStepperForm';
 
@@ -13,17 +14,16 @@ const theme = createMuiTheme({
   },
 });
 
+export const FormContext = createContext();
+
 function App() {
+  const [data, setData] = useState([]);
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container style={{ height: '1000px' }}>
-        <Grid md={1} style={{ backgroundColor: '#eaeaea' }}></Grid>
-        <Grid md={10} xs={12}>
-          <VerticalStepperForm />
-        </Grid>
-        <Grid md={1}></Grid>
-      </Grid>
-    </ThemeProvider>
+    <FormContext.Provider value={[data, setData]}>
+      <ThemeProvider theme={theme}>
+        <VerticalStepperForm />
+      </ThemeProvider>
+    </FormContext.Provider>
   )
 }
 

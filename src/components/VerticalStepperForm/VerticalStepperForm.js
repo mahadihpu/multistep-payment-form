@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -13,6 +13,7 @@ import KycDetail from '../KycDetail';
 import BankVerification from '../BankVerification';
 import { Box, Button, Grid, StepButton } from '@material-ui/core';
 import './VerticalStepperFrom.css';
+import { FormContext } from '../../App';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -30,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
    },
    steps: {
       marginTop: "30%"
+   },
+   completedBtn: {
+      marginLeft: 20
    }
 }));
 
@@ -49,9 +53,10 @@ function getStepContent(step) {
       case 3:
          return <Step4 />;
       default:
-         return 'Unknown step';
+         return <><Typography variant="h3" align="center">Form is completed</Typography><Typography color="primary" align="center">Congratulations!Now get access to quick cash loan</Typography></>;
    }
 }
+
 
 
 
@@ -61,7 +66,7 @@ const VerticalStepperForm = () => {
    const [activeStep, setActiveStep] = React.useState(0)
    const [completed, setCompleted] = React.useState({})
    const steps = getSteps()
-
+   const [data, setData] = useContext(FormContext);
    const totalSteps = () => {
       return steps.length
    }
@@ -77,7 +82,12 @@ const VerticalStepperForm = () => {
    const allStepsCompleted = () => {
       return completedSteps() === totalSteps()
    }
-
+   const handleComplete = () => {
+      const newCompleted = completed;
+      newCompleted[activeStep] = true;
+      setCompleted(newCompleted);
+      handleNext();
+   };
    const handleNext = () => {
       const newActiveStep =
          isLastStep() && !allStepsCompleted()
@@ -96,7 +106,6 @@ const VerticalStepperForm = () => {
       setActiveStep(step)
    }
 
-
    const handleReset = () => {
       setActiveStep(0)
       setCompleted({})
@@ -113,29 +122,57 @@ const VerticalStepperForm = () => {
                      <Typography variant="h3">LOAN APPLICATION</Typography>
                      <Typography variant="h6">Fill out the details to get access to quick cash loan</Typography>
                   </Box>
-                  <Stepper style={{ backgroundColor: '#eaeaea' }} orientation="vertical" nonLinear activeStep={activeStep}>
+                  <Stepper style={{ backgroundColor: '#eaeaea' }} orientation="vertical" activeStep={activeStep}>
                      {steps.map((label, index) => (
                         <Step key={label}>
                            <StepButton
                               onClick={handleStep(index)}
                               completed={completed[index]}
                               icon=""
-                           // style={{ backgroundColor: '#eae' }}
                            >
                               {label}
                            </StepButton>
                            {/* <Button onClick={handleStep(index)}
-                              completed={completed[index]}>
+                              completed={completed[index]}
+
+                              >
                               {label}
                            </Button> */}
                         </Step>
                      ))}
                   </Stepper>
+                  {activeStep !== steps.length &&
+                     (completed[activeStep] ? (
+                        <>
+                           <Box>
+                              <Typography variant="caption" className={classes.completed}>
+                                 Form already completed
+                              </Typography>
+                              <br />
+                              <Button onClick={handleReset} variant="outlined" color="primary">
+                                 Reset
+                              </Button>
+                           </Box>
+                        </>
+                     ) : null)}
                </Grid>
                <Grid xs={6} className="rightContents">
                   <Box className={classes.steps}>
                      {getStepContent(activeStep)}
                   </Box>
+                  {activeStep !== steps.length &&
+                     (completed[activeStep] ? (
+                        <>
+                           <Typography variant="caption" className={classes.completed}>
+                              Step {activeStep + 1} already completed
+                           </Typography>
+                        </>
+                     ) : (
+                        <>{data && <Button variant="contained" className={classes.completedBtn} color="primary" onClick={handleComplete}>
+                           {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
+                        </Button>
+                        }</>
+                     ))}
                </Grid>
             </Grid>
          </Box>

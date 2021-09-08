@@ -5,18 +5,15 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Box, Grid, TextField } from '@material-ui/core';
+import { Box, TextField } from '@material-ui/core';
 import { ArrowRight } from '@material-ui/icons';
-import Phone from './InputField';
-import './style.css';
-import OtpInput from 'react-otp-input';
 import InputField from './InputField';
 
 const useStyles = makeStyles((theme) => ({
    root: {
       width: '100%',
+      margin: 20
    },
    button: {
       marginTop: "9px",
@@ -38,17 +35,14 @@ function getSteps() {
    return ['Your mobile number', 'Enter your mobile OTP', 'Enter your email ID'];
 }
 
-function getStepContent(step) {
+function getStepContent(step, activeStep, steps, handleNext, setActiveStep) {
    switch (step) {
       case 0:
-         return <InputField numInputs={10} message="Enter your phone number to proceed" />;
+         return <InputField activeStep={activeStep} steps={steps} handleNext={handleNext} setActiveStep={setActiveStep} numInputs={10} message="Enter your phone number to proceed" />;
       case 1:
-         return <InputField numInputs={4} message="Check your phone for OTP code" />;
+         return <InputField activeStep={activeStep} steps={steps} handleNext={handleNext} setActiveStep={setActiveStep} numInputs={4} message="Check your phone for OTP code" />;
       case 2:
-         return <TextField
-            id="standard-basic"
-            label="Email"
-         />
+         return <InputField type="email" activeStep={activeStep} steps={steps} handleNext={handleNext} setActiveStep={setActiveStep} />
       default:
          return 'Unknown step';
    }
@@ -80,28 +74,12 @@ export default function Step1() {
                   <StepLabel>{label}</StepLabel>
                   <StepContent>
                      <Box className={classes.actionsContainer}>
-                        <Box>{getStepContent(index)}</Box>
-                        <Box><Button
-                           variant="contained"
-                           color="primary"
-                           onClick={handleNext}
-                           className={classes.button}
-                        >
-                           {activeStep === steps.length - 1 ? 'Finish' : <ArrowRight className={classes.arrowRight} />}
-                        </Button></Box>
+                        <Box>{getStepContent(index, activeStep, steps, handleNext, setActiveStep)}</Box>
                      </Box>
                   </StepContent>
                </Step>
             ))}
          </Stepper>
-         {activeStep === steps.length && (
-            <Paper square elevation={0} className={classes.resetContainer}>
-               <Typography>All steps completed - you&apos;re finished</Typography>
-               <Button onClick={handleReset} className={classes.button}>
-                  Reset
-               </Button>
-            </Paper>
-         )}
       </Box>
    );
 }
