@@ -1,19 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import Typography from '@material-ui/core/Typography';
-import Step1 from '../Step1/Step1';
-import Step2 from '../Step2';
-import Step3 from '../Step3';
-import Step4 from '../Step4';
-import MobileEmailVerification from '../MobileEmailVerification';
-import PersonalDetails from '../PersonalDetails';
-import KycDetail from '../KycDetail';
-import BankVerification from '../BankVerification';
-import { Box, Button, Grid, StepButton } from '@material-ui/core';
+import { Box, Grid, StepButton } from '@material-ui/core';
 import './VerticalStepperFrom.css';
-import { FormContext } from '../../App';
+import Steps from '../Steps';
+import StepContents from '../StepContents';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -37,34 +30,46 @@ const useStyles = makeStyles((theme) => ({
    }
 }));
 
-function getSteps() {
-   return [<MobileEmailVerification />, <PersonalDetails />, <KycDetail />, <BankVerification />];
+// function getSteps() {
+//    return [<MobileEmailVerification />, <PersonalDetails />, <KycDetail />, <BankVerification />];
+// }
+
+function getSteps(stepData) {
+   return stepData.map((step, index) => <Steps index={index} title={step.title} message={step.message} />)
 }
 
-
-function getStepContent(step, handleComplete, completedSteps, totalSteps) {
-   switch (step) {
-      case 0:
-         return <Step1 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
-      case 1:
-         return <Step2 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
-      case 2:
-         return <Step3 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
-      case 3:
-         return <Step4 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
+function getStepContent(activeStep, handleComplete, completedSteps, totalSteps, stepData) {
+   switch (activeStep) {
+      case activeStep < stepData.length && activeStep:
+         return <StepContents index={activeStep} data={stepData[activeStep]} handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
+      // case 1:
+      //    return <Step2 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
+      // case 2:
+      //    return <Step3 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
+      // case 3:
+      //    return <Step4 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
+      // case 4:
+      //    return <Step4 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
       default:
          return <><Typography variant="h3" align="center">Form is completed</Typography><Typography color="primary" align="center">Congratulations!Now get access to quick cash loan</Typography></>;
    }
 }
 
+const stepData = [
+   { title: "Mobile and Email Verification", message: "Get your mobile and email verified to get access to quick cash loan" },
+   { title: "Personal Detail", message: "Get your mobile and email verified to get access to quick cash loan" },
+   { title: "KYC Verification", message: "Get your mobile and email verified to get access to quick cash loan" },
+   { title: "Bank Verification", message: "Get your mobile and email verified to get access to quick cash loan" },
+   { title: "Country Verification", message: "Get your mobile and email verified to get access to quick cash loan" },
+   { title: "Friend Verification", message: "Get your mobile and email verified to get access to quick cash loan" },
+   { title: "enemy Verification", message: "Get your mobile and email verified to get access to quick cash loan" },
+];
 
 const VerticalStepperForm = () => {
-
    const classes = useStyles()
    const [activeStep, setActiveStep] = React.useState(0)
    const [completed, setCompleted] = React.useState({})
-   const steps = getSteps()
-   const [data, setData] = useContext(FormContext);
+   const steps = getSteps(stepData);
    const totalSteps = () => {
       return steps.length
    }
@@ -127,16 +132,10 @@ const VerticalStepperForm = () => {
                            >
                               {label}
                            </StepButton>
-                           {/* <Button onClick={handleStep(index)}
-                              completed={completed[index]}
-
-                              >
-                              {label}
-                           </Button> */}
                         </Step>
                      ))}
                   </Stepper>
-                  {activeStep !== steps.length &&
+                  {/* {activeStep !== steps.length &&
                      (completed[activeStep] ? (
                         <>
                            <Box>
@@ -149,11 +148,11 @@ const VerticalStepperForm = () => {
                               </Button>
                            </Box>
                         </>
-                     ) : null)}
+                     ) : null)} */}
                </Grid>
                <Grid xs={6} className="rightContents">
                   <Box className={classes.steps}>
-                     {getStepContent(activeStep, handleComplete, completedSteps, totalSteps)}
+                     {getStepContent(activeStep, handleComplete, completedSteps, totalSteps, stepData)}
                   </Box>
                </Grid>
             </Grid>

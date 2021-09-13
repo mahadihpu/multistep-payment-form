@@ -1,4 +1,4 @@
-import { createMuiTheme, Grid, ThemeProvider } from '@material-ui/core'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 import { createContext, useState } from 'react';
 import './App.css'
 import VerticalStepperForm from './components/VerticalStepperForm/VerticalStepperForm';

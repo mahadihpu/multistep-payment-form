@@ -7,7 +7,6 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Box, TextField } from '@material-ui/core';
-import { ArrowRight } from '@material-ui/icons';
 import InputField from './InputField';
 import { useState } from 'react';
 
