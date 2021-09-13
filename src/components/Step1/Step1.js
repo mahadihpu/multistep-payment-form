@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { Box, TextField } from '@material-ui/core';
 import { ArrowRight } from '@material-ui/icons';
 import InputField from './InputField';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -35,34 +36,31 @@ function getSteps() {
    return ['Your mobile number', 'Enter your mobile OTP', 'Enter your email ID'];
 }
 
-function getStepContent(step, activeStep, steps, handleNext, setActiveStep) {
+function getStepContent(step, activeStep, steps, handleNext, setActiveStep, setComplete) {
    switch (step) {
       case 0:
          return <InputField activeStep={activeStep} steps={steps} handleNext={handleNext} setActiveStep={setActiveStep} numInputs={10} message="Enter your phone number to proceed" />;
       case 1:
          return <InputField activeStep={activeStep} steps={steps} handleNext={handleNext} setActiveStep={setActiveStep} numInputs={4} message="Check your phone for OTP code" />;
       case 2:
-         return <InputField type="email" activeStep={activeStep} steps={steps} handleNext={handleNext} setActiveStep={setActiveStep} />
+         return <TextField onBlur={(e) => validEmail(e.target.value) === true && setComplete(true)} />
       default:
          return 'Unknown step';
    }
 }
+function validEmail(e) {
+   var filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
+   return String(e).search(filter) != -1;
+}
 
-export default function Step1() {
+const Step1 = ({ handleComplete, completedSteps, totalSteps }) => {
    const classes = useStyles();
    const [activeStep, setActiveStep] = React.useState(0);
+   const [complete, setComplete] = useState(false);
    const steps = getSteps();
 
    const handleNext = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-   };
-
-   const handleBack = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
-   };
-
-   const handleReset = () => {
-      setActiveStep(0);
    };
 
    return (
@@ -74,12 +72,17 @@ export default function Step1() {
                   <StepLabel>{label}</StepLabel>
                   <StepContent>
                      <Box className={classes.actionsContainer}>
-                        <Box>{getStepContent(index, activeStep, steps, handleNext, setActiveStep)}</Box>
+                        <Box>{getStepContent(index, activeStep, steps, handleNext, setActiveStep, setComplete)}</Box>
                      </Box>
                   </StepContent>
                </Step>
             ))}
          </Stepper>
+         {complete === true && <Button variant="contained" className={classes.completedBtn} color="primary" onClick={handleComplete}>
+            {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
+         </Button>}
       </Box>
    );
 }
+
+export default Step1;

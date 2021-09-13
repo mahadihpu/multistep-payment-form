@@ -42,22 +42,20 @@ function getSteps() {
 }
 
 
-function getStepContent(step) {
+function getStepContent(step, handleComplete, completedSteps, totalSteps) {
    switch (step) {
       case 0:
-         return <Step1 />;
+         return <Step1 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
       case 1:
-         return <Step2 />;
+         return <Step2 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
       case 2:
-         return <Step3 />;
+         return <Step3 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
       case 3:
-         return <Step4 />;
+         return <Step4 handleComplete={handleComplete} completedSteps={completedSteps} totalSteps={totalSteps} />;
       default:
          return <><Typography variant="h3" align="center">Form is completed</Typography><Typography color="primary" align="center">Congratulations!Now get access to quick cash loan</Typography></>;
    }
 }
-
-
 
 
 const VerticalStepperForm = () => {
@@ -91,8 +89,7 @@ const VerticalStepperForm = () => {
    const handleNext = () => {
       const newActiveStep =
          isLastStep() && !allStepsCompleted()
-            ? // It's the last step, but not all steps have been completed,
-            // find the first step that has been completed
+            ?
             steps.findIndex((step, i) => !(i in completed))
             : activeStep + 1
       setActiveStep(newActiveStep)
@@ -110,8 +107,6 @@ const VerticalStepperForm = () => {
       setActiveStep(0)
       setCompleted({})
    }
-
-
 
    return (
       <Box>
@@ -158,21 +153,8 @@ const VerticalStepperForm = () => {
                </Grid>
                <Grid xs={6} className="rightContents">
                   <Box className={classes.steps}>
-                     {getStepContent(activeStep)}
+                     {getStepContent(activeStep, handleComplete, completedSteps, totalSteps)}
                   </Box>
-                  {activeStep !== steps.length &&
-                     (completed[activeStep] ? (
-                        <>
-                           <Typography variant="caption" className={classes.completed}>
-                              Step {activeStep + 1} already completed
-                           </Typography>
-                        </>
-                     ) : (
-                        <>{data && <Button variant="contained" className={classes.completedBtn} color="primary" onClick={handleComplete}>
-                           {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                        </Button>
-                        }</>
-                     ))}
                </Grid>
             </Grid>
          </Box>
